@@ -1,7 +1,8 @@
-package com.swjjang7.reportmillie
+package com.swjjang7.reportmillie.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.swjjang7.reportmillie.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
