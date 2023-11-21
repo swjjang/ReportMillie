@@ -1,4 +1,4 @@
-package com.swjjang7.reportmillie.screen
+package com.swjjang7.reportmillie.screen.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
