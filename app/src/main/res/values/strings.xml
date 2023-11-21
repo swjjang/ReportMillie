@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReportMillie</string>
+    <string name="news_api_key">3ade64cc29c44b10a89b75f649621cca</string>
 </resources>
