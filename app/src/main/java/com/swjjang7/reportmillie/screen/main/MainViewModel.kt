@@ -23,7 +23,14 @@ class MainViewModel @Inject constructor(
 
     private fun requestNewsList() {
         viewModelScope.launch {
-            _newsList.value = networkImpl.getNewsList()
+            _newsList.value = try {
+                // 예제 앱이며, 간단한 처리만 할 것임으로 try catch 사용
+                networkImpl.getNewsList()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // TODO : 로컬 데이터 노출
+                listOf<Article>()
+            }
         }
     }
 }
