@@ -1,11 +1,13 @@
 package com.swjjang7.reportmillie.util
 
+import android.content.res.Resources
 import android.graphics.Rect
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 internal class GridSpacingItemDecoration(
-    private val spanCount: Int,
     private val spacing: Int,
     private val includeEdge: Boolean = false
 ) : RecyclerView.ItemDecoration() {
@@ -17,6 +19,12 @@ internal class GridSpacingItemDecoration(
         state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view) // item position
+
+        val spanCount = when (val layoutManager = parent.layoutManager) {
+            is GridLayoutManager -> layoutManager.spanCount
+            is StaggeredGridLayoutManager -> layoutManager.spanCount
+            else -> throw Resources.NotFoundException("layoutManager is null or not Grid")
+        }
 
         if (position >= 0) {
             val column = position % spanCount // item column

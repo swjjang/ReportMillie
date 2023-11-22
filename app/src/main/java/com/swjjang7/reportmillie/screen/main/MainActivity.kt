@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.swjjang7.reportmillie.R
 import com.swjjang7.reportmillie.databinding.ActivityMainDataBinding
 import com.swjjang7.reportmillie.screen.web.WebViewActivity
+import com.swjjang7.reportmillie.util.GridSpacingItemDecoration
+import com.swjjang7.reportmillie.util.dp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,7 +40,12 @@ class MainActivity : AppCompatActivity() {
             it.adapter = listAdapter
         }
 
+        initViews()
         initEvent()
+    }
+
+    private fun initViews() {
+        binding.recyclerView.addItemDecoration(GridSpacingItemDecoration(10.dp, true))
     }
 
     private fun initEvent() {

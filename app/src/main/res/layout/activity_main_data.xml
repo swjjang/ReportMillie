@@ -22,6 +22,7 @@
         tools:context=".screen.main.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adapter="@{adapter}"
