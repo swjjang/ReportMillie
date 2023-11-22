@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.swjjang7.reportmillie.screen.main.MainViewModel" />
@@ -14,13 +15,13 @@
 
         <variable
             name="data"
-            type="com.swjjang7.reportmillie.repository.remote.entity.Article" />
+            type="com.swjjang7.reportmillie.repository.local.entity.Article" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:onClick="@{() -> viewModel.onItemClick(data)}"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.onItemClick(data)}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView"
