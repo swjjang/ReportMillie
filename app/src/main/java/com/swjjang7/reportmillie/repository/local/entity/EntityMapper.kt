@@ -6,7 +6,7 @@ import com.swjjang7.reportmillie.repository.remote.model.SourceData
 fun ArticleData.asEntity() = Article(
     source = source?.asEntity(),
     author = author,
-    title = title,
+    title = title ?: "",
     description = description,
     url = url,
     urlToImage = urlToImage,

@@ -6,15 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Article(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-
     @Embedded(prefix = "source")
     val source: Source?,
 
     val author: String?,
 
-    val title: String?,
+    @PrimaryKey
+    val title: String,
 
     val description: String?,
 
@@ -26,5 +24,5 @@ data class Article(
 
     val content: String?,
 
-    var readTime: Long? = null,
+    val read: Boolean = false,
 )
