@@ -3,6 +3,8 @@ package com.swjjang7.reportmillie.screen.web
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebChromeClient
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.swjjang7.reportmillie.R
@@ -44,11 +46,14 @@ class WebViewActivity : AppCompatActivity() {
             setInitialScale(100)
 
             with(settings) {
+                webViewClient = WebViewClient()
+                webChromeClient = WebChromeClient()
+                javaScriptEnabled = true
+
                 textZoom = 100
                 builtInZoomControls = true
                 displayZoomControls = false
             }
         }
     }
-
 }
