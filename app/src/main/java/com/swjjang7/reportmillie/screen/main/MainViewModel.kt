@@ -5,14 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.swjjang7.reportmillie.repository.ArticleImpl
 import com.swjjang7.reportmillie.repository.local.entity.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -38,8 +36,10 @@ class MainViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _newsList.value = articleImpl.getNewsList()
+            articleImpl.getNewsList()
+
+            articleImpl.findAll().collect { list ->
+                _newsList.emit(list)
                 isLoading.lazySet(false)
             }
         }
@@ -48,6 +48,7 @@ class MainViewModel @Inject constructor(
     fun onItemClick(item: Article) {
         viewModelScope.launch {
             _event.emit(Event.Click(item))
+            articleImpl.updateArticle(item)
         }
     }
 

@@ -3,14 +3,16 @@ package com.swjjang7.reportmillie.repository
 import com.swjjang7.reportmillie.repository.local.ArticleDao
 import com.swjjang7.reportmillie.repository.local.entity.Article
 import com.swjjang7.reportmillie.repository.remote.NetworkImpl
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ArticleImpl @Inject constructor(
     private val networkImpl: NetworkImpl,
     private val articleDao: ArticleDao,
 ) {
-    suspend fun getNewsList(): List<Article> {
+    suspend fun getNewsList() {
         val networkList = try {
             networkImpl.getNewsList()
         } catch (e: Exception) {
@@ -18,13 +20,18 @@ class ArticleImpl @Inject constructor(
             listOf<Article>()
         }
 
-        val list = if (networkList.isNotEmpty()) {
+        withContext(Dispatchers.IO) {
             articleDao.upsertArticleList(networkList)
-            networkList
-        } else {
-            articleDao.findAll().first()
         }
+    }
 
-        return list
+    fun findAll(): Flow<List<Article>> {
+        return articleDao.findAll()
+    }
+
+    suspend fun updateArticle(article: Article) {
+        withContext(Dispatchers.IO) {
+            articleDao.updateArticle(article.copy(readTime = System.currentTimeMillis()))
+        }
     }
 }

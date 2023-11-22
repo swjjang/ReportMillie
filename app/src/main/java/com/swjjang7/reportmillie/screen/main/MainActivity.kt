@@ -62,10 +62,13 @@ class MainActivity : AppCompatActivity() {
         when (event) {
             is Event.Click -> {
                 startActivity(WebViewActivity.newInstance(this, event.item.url ?: ""))
-                Settings.ACTION_NETWORK_OPERATOR_SETTINGS
             }
 
             Event.MoveNetworkSetting -> {
+                if (checkNMoveSetting(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)) {
+                    return
+                }
+
                 if (checkNMoveSetting(Settings.ACTION_WIRELESS_SETTINGS)) {
                     return
                 }

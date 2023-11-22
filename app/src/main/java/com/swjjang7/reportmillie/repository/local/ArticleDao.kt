@@ -2,6 +2,7 @@ package com.swjjang7.reportmillie.repository.local
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.swjjang7.reportmillie.repository.local.entity.Article
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +14,7 @@ interface ArticleDao {
 
     @Upsert
     fun upsertArticleList(list: List<Article>)
+
+    @Update
+    fun updateArticle(article: Article)
 }
