@@ -44,6 +44,7 @@ class WebViewActivity : AppCompatActivity() {
             setInitialScale(100)
 
             with(settings) {
+                javaScriptEnabled = true
                 textZoom = 100
                 builtInZoomControls = true
                 displayZoomControls = false
