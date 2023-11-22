@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.swjjang7.reportmillie.screen.main.MainViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.swjjang7.reportmillie.screen.main.MainAdapter" />
 
         <variable
             name="data"
@@ -11,6 +18,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{() -> viewModel.onItemClick(data)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

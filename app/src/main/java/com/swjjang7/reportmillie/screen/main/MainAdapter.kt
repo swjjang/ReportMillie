@@ -11,7 +11,7 @@ import com.swjjang7.reportmillie.R
 import com.swjjang7.reportmillie.databinding.NewsItemDataBinding
 import com.swjjang7.reportmillie.repository.remote.entity.Article
 
-class MainAdapter(private val context: Context) :
+class MainAdapter(private val context: Context, private val viewModel: MainViewModel) :
     ListAdapter<Article, MainAdapter.ItemHolder>(MainDiffCallback()) {
 
 
@@ -37,6 +37,7 @@ class MainAdapter(private val context: Context) :
         fun onBindViewHolder(item: Article) {
             dataBinding.also {
                 it.data = item
+                it.viewModel = viewModel
             }
         }
     }
