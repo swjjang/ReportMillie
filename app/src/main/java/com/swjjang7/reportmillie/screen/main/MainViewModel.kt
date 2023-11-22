@@ -27,6 +27,12 @@ class MainViewModel @Inject constructor(
     private var isLoading: AtomicBoolean = AtomicBoolean(false)
 
     init {
+        viewModelScope.launch {
+            articleImpl.findAll().collect { list ->
+                _newsList.emit(list)
+            }
+        }
+
         requestNewsList()
     }
 
@@ -37,11 +43,7 @@ class MainViewModel @Inject constructor(
 
         viewModelScope.launch {
             articleImpl.getNewsList()
-
-            articleImpl.findAll().collect { list ->
-                _newsList.emit(list)
-                isLoading.lazySet(false)
-            }
+            isLoading.lazySet(false)
         }
     }
 
