@@ -1,6 +1,8 @@
 package com.swjjang7.reportmillie.screen.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -53,9 +55,32 @@ class MainActivity : AppCompatActivity() {
         when (event) {
             is Event.Click -> {
                 startActivity(WebViewActivity.newInstance(this, event.item.url ?: ""))
+                Settings.ACTION_NETWORK_OPERATOR_SETTINGS
+            }
+
+            Event.MoveNetworkSetting -> {
+                if (checkNMoveSetting(Settings.ACTION_WIRELESS_SETTINGS)) {
+                    return
+                }
+
+                checkNMoveSetting(Settings.ACTION_WIFI_SETTINGS)
+            }
+
+            Event.Retry -> {
+                viewModel.requestNewsList()
             }
 
             Event.None -> {}
+        }
+    }
+
+    private fun checkNMoveSetting(settingsAction: String): Boolean {
+        val intent = Intent(settingsAction)
+        return if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+            true
+        } else {
+            false
         }
     }
 }

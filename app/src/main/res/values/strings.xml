@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">ReportMillie</string>
-    <string name="news_api_key">3ade64cc29c44b10a89b75f649621cca</string>
+    <string name="empty_text">뉴스 목록이 비었습니다.</string>
+    <string name="retry_text">목록 다시 가져오기</string>
+    <string name="move_network_setting">네트워크 설정 바로가기</string>
 </resources>

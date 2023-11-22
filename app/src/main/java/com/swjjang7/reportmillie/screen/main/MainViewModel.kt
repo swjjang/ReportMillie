@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,14 +26,21 @@ class MainViewModel @Inject constructor(
     private val _event = MutableSharedFlow<Event>()
     val event: SharedFlow<Event> = _event.asSharedFlow()
 
+    private var isLoading: AtomicBoolean = AtomicBoolean(false)
+
     init {
         requestNewsList()
     }
 
-    private fun requestNewsList() {
+    fun requestNewsList() {
+        if (isLoading.getAndSet(true)) {
+            return
+        }
+
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _newsList.value = articleImpl.getNewsList()
+                isLoading.lazySet(false)
             }
         }
     }
@@ -42,9 +50,23 @@ class MainViewModel @Inject constructor(
             _event.emit(Event.Click(item))
         }
     }
+
+    fun onRetryClick() {
+        viewModelScope.launch {
+            _event.emit(Event.Retry)
+        }
+    }
+
+    fun onMoveNetworkSettingClick() {
+        viewModelScope.launch {
+            _event.emit(Event.MoveNetworkSetting)
+        }
+    }
 }
 
 sealed class Event() {
     data class Click(val item: Article) : Event()
+    data object Retry : Event()
+    data object MoveNetworkSetting : Event()
     data object None : Event()
 }
