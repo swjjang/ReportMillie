@@ -31,7 +31,7 @@ class MainAdapter(private val context: Context, private val viewModel: MainViewM
         holder.onBindViewHolder(item)
     }
 
-    inner class ItemHolder(val dataBinding: NewsItemDataBinding) :
+    inner class ItemHolder(private val dataBinding: NewsItemDataBinding) :
         RecyclerView.ViewHolder(dataBinding.root) {
 
         fun onBindViewHolder(item: Article) {

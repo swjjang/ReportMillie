@@ -11,7 +11,6 @@ interface NetworkService {
         "Accept: application/json;charset=UTF-8",
         "Content-type: application/json;charset=UTF-8"
     )
-//    @GET("https://newsapi.org/v2/top-headlines?country=kr&apiKey=3ade64cc29c44b10a89b75f649621cca")
     @GET("v2/top-headlines?country=kr&apiKey=3ade64cc29c44b10a89b75f649621cca")
     suspend fun getNewsList(): Response<BaseListDto<ArticleData>>
 }

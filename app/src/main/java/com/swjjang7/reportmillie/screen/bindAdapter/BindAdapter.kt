@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 @BindingAdapter("imageUrl")
@@ -20,13 +21,32 @@ fun loadImage(view: AppCompatImageView, url: String?) {
 
 @BindingAdapter("dateText")
 fun loadDateText(view: TextView, dateString: String?) {
-    // 2023-11-20T03:01:12Z
+    val date = stringToDate(dateString)
+    view.text = dateToString(date)
+}
 
-    val inFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.KOREA)
-    val date = inFormat.parse(dateString)
+private fun stringToDate(dateString: String?): Date? {
+    if (dateString.isNullOrEmpty()) {
+        return null
+    }
 
-    val outFormat = SimpleDateFormat("yyyy년 MM월 dd일 hh:mm:ss (EEE)", Locale.KOREA)
-    view.text = outFormat.format(date)
+    return try {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.KOREA)
+        format.parse(dateString)
+    } catch (e: Exception) {
+        null
+    }
+}
+
+private fun dateToString(date: Date?): String? {
+    date ?: return null
+
+    return try {
+        val format = SimpleDateFormat("yyyy년 MM월 dd일 hh:mm:ss (EEE)", Locale.KOREA)
+        format.format(date)
+    } catch (e: Exception) {
+        null
+    }
 }
 
 @BindingAdapter("submitList")
